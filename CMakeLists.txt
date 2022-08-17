@@ -5,8 +5,8 @@ PROJECT(octo-encryption-cpp)
 # Add CMake options to path
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/)
 INCLUDE(ConfigOptions)
-INCLUDE(LoadConanBuildInfo)
-LOAD_CONAN_BUILD_INFO()
+
+FIND_PACKAGE(openssl REQUIRED CONFIG)
 
 # Library definition
 ADD_LIBRARY(octo-encryption-cpp STATIC
@@ -39,7 +39,7 @@ TARGET_INCLUDE_DIRECTORIES(octo-encryption-cpp
 
 TARGET_LINK_LIBRARIES(octo-encryption-cpp
     # System libraries
-    CONAN_PKG::openssl
+    openssl::openssl
 )
 
 # Installation of the logger

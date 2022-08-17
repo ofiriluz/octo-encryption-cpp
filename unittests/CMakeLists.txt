@@ -1,4 +1,4 @@
-SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CATCH2_ROOT}/lib/cmake/Catch2)
+FIND_PACKAGE(Catch2 REQUIRED CONFIG)
 
 # UT definition
 ADD_EXECUTABLE(octo-encryption-cpp-tests
@@ -15,7 +15,7 @@ SET_TARGET_PROPERTIES(octo-encryption-cpp-tests PROPERTIES CXX_STANDARD 17 POSIT
 TARGET_LINK_LIBRARIES(octo-encryption-cpp-tests
     octo-encryption-cpp
 
-    CONAN_PKG::catch2
+    Catch2::Catch2
 
     # System Libraries
     $<$<PLATFORM_ID:Linux>:pthread>
