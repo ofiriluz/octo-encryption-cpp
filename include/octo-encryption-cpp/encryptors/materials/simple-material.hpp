@@ -42,7 +42,7 @@ class SimpleMaterial : public Material
     {
         return materials_;
     }
-    [[nodiscard]] size_t size() const override
+    [[nodiscard]] std::size_t size() const override
     {
         return materials_.size();
     }
