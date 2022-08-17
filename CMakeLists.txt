@@ -25,6 +25,12 @@ ADD_LIBRARY(core::octo-encryption-cpp ALIAS octo-encryption-cpp)
 # Properties
 SET_TARGET_PROPERTIES(octo-encryption-cpp PROPERTIES CXX_STANDARD 17 POSITION_INDEPENDENT_CODE ON)
 
+TARGET_COMPILE_OPTIONS(octo-encryption-cpp
+    PRIVATE
+        $<$<NOT:$<PLATFORM_ID:Windows>>:-Werror=return-type>
+        $<$<NOT:$<PLATFORM_ID:Windows>>:-Werror=switch>
+)
+
 TARGET_INCLUDE_DIRECTORIES(octo-encryption-cpp
     PUBLIC
         # Logger includes
@@ -47,7 +53,7 @@ INSTALL(TARGETS octo-encryption-cpp
 )
 
 # Unittests
-IF(NOT DISABLE_TESTS)
+IF(NOT DISABLE_TESTS AND NOT WIN32)
     ENABLE_TESTING()
     ADD_SUBDIRECTORY(unittests)
 ENDIF()

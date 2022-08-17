@@ -2,6 +2,8 @@ octo-encryption-cpp
 ==============
 
 [![Encryption Linux Build Pipeline](https://github.com/ofiriluz/octo-encryption-cpp/actions/workflows/linux.yml/badge.svg)](https://github.com/ofiriluz/octo-encryption-cpp/actions/workflows/linux.yml)
+[![Encryption Windows Build Pipeline](https://github.com/ofiriluz/octo-encryption-cpp/actions/workflows/windows.yml/badge.svg)](https://github.com/ofiriluz/octo-encryption-cpp/actions/workflows/windows.yml)
+[![Encryption Mac Build Pipeline](https://github.com/ofiriluz/octo-encryption-cpp/actions/workflows/mac.yml/badge.svg)](https://github.com/ofiriluz/octo-encryption-cpp/actions/workflows/mac.yml)
 
 Encryption library in CPP, with base interfaces implemented with openssl
 
