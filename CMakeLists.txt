@@ -6,7 +6,7 @@ PROJECT(octo-encryption-cpp)
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/)
 INCLUDE(ConfigOptions)
 
-FIND_PACKAGE(openssl REQUIRED CONFIG)
+FIND_PACKAGE(OpenSSL REQUIRED CONFIG)
 
 # Library definition
 ADD_LIBRARY(octo-encryption-cpp STATIC
@@ -39,7 +39,8 @@ TARGET_INCLUDE_DIRECTORIES(octo-encryption-cpp
 
 TARGET_LINK_LIBRARIES(octo-encryption-cpp
     # System libraries
-    openssl::openssl
+    OpenSSL::SSL
+    OpenSSL::Crypto
 )
 
 # Installation of the logger
