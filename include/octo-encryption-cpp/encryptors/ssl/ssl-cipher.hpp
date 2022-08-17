@@ -33,9 +33,9 @@ class SSLCipher
 
     [[nodiscard]] int type() const;
     [[nodiscard]] std::string name() const;
-    [[nodiscard]] size_t block_size() const;
-    [[nodiscard]] size_t key_length() const;
-    [[nodiscard]] size_t iv_length() const;
+    [[nodiscard]] std::size_t block_size() const;
+    [[nodiscard]] std::size_t key_length() const;
+    [[nodiscard]] std::size_t iv_length() const;
     [[nodiscard]] unsigned long flags() const;
     [[nodiscard]] unsigned long mode() const;
 };

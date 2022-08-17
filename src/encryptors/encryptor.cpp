@@ -13,14 +13,14 @@
 
 namespace octo::encryption
 {
-void Encryptor::secure_zeromem(volatile char* message, size_t size)
+void Encryptor::secure_zeromem(volatile char* message, std::size_t size)
 {
     if (message == nullptr)
     {
         return;
     }
 
-    for (size_t i = 0; i < size; ++i)
+    for (std::size_t i = 0; i < size; ++i)
     {
         *(((volatile char*)message) + i) ^= *(((volatile char*)message) + i);
     }
@@ -31,7 +31,7 @@ void Encryptor::secure_zeromem(std::string& message)
     secure_zeromem(reinterpret_cast<volatile char*>(&message[0]), message.size());
 }
 
-void Encryptor::secure_zeromem(std::vector<uint8_t>& message)
+void Encryptor::secure_zeromem(std::vector<std::uint8_t>& message)
 {
     secure_zeromem(reinterpret_cast<volatile char*>(&message[0]), message.size());
 }

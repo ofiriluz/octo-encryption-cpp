@@ -36,12 +36,12 @@ class SSLDigest : public Digest
     ~SSLDigest() override;
 
     void update(const std::string& plain_text) override;
-    void update(const std::vector<char>& plain_text, size_t size) override;
-    void update(const char* plain_text, size_t size) override;
-    void update(const uint8_t* plain_text, size_t size) override;
+    void update(const std::vector<char>& plain_text, std::size_t size) override;
+    void update(const char* plain_text, std::size_t size) override;
+    void update(const std::uint8_t* plain_text, std::size_t size) override;
     void reset() override;
     std::string finalize() override;
-    size_t length() override;
+    std::size_t length() override;
 };
 
 class Sha224Digest final : public SSLDigest

@@ -14,6 +14,7 @@
 
 #include <vector>
 #include <cstdint>
+#include <cstddef>
 
 namespace octo::encryption
 {
@@ -23,7 +24,7 @@ class SecureRandom
     SecureRandom() = default;
     virtual ~SecureRandom() = default;
 
-    static std::vector<uint8_t> generate_random(size_t size);
+    static std::vector<std::uint8_t> generate_random(std::size_t size);
 };
 } // namespace octo::encryption
 

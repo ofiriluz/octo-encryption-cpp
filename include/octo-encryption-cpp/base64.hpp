@@ -13,6 +13,8 @@
 #define BASE64_HPP_
 
 #include <string>
+#include <cstdint>
+#include <cstddef>
 
 namespace octo::encryption
 {

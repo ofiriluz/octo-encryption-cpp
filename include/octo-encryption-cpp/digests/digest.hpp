@@ -15,6 +15,8 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <cstdint>
+#include <cstddef>
 
 namespace octo::encryption
 {
@@ -34,9 +36,9 @@ class Digest
      * @param plain_text
      */
     virtual void update(const std::string& plain_text) = 0;
-    virtual void update(const std::vector<char>& plain_text, size_t size) = 0;
-    virtual void update(const char* plain_text, size_t size) = 0;
-    virtual void update(const unsigned char* plain_text, size_t size) = 0;
+    virtual void update(const std::vector<char>& plain_text, std::size_t size) = 0;
+    virtual void update(const char* plain_text, std::size_t size) = 0;
+    virtual void update(const std::uint8_t* plain_text, std::size_t size) = 0;
     /**
      * @brief Resets the digest algorithm
      *
@@ -51,9 +53,9 @@ class Digest
     /**
      * @brief Getter for the digest length
      *
-     * @return size_t
+     * @return std::size_t
      */
-    virtual size_t length() = 0;
+    virtual std::size_t length() = 0;
     /**
      * @brief Clones the current digest
      *

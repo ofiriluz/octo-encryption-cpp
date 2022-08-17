@@ -73,7 +73,7 @@ std::string Base64::base64_decode(const std::string& encoded_text)
 
     // Decode
     const auto maxlen = encoded_text.size() / 4 * 3 + 1;
-    std::vector<unsigned char> decoded(maxlen);
+    std::vector<std::uint8_t> decoded(maxlen);
     const int len = BIO_read(b64.get(), decoded.data(), maxlen);
     decoded.resize(len);
 

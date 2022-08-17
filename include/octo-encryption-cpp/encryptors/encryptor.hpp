@@ -14,6 +14,8 @@
 
 #include <string>
 #include <memory>
+#include <cstddef>
+#include <cstdint>
 #include "material.hpp"
 
 namespace octo::encryption
@@ -24,12 +26,12 @@ class Encryptor
     Encryptor() = default;
     virtual ~Encryptor() = default;
 
-    static void secure_zeromem(volatile char* message, size_t size);
+    static void secure_zeromem(volatile char* message, std::size_t size);
     static void secure_zeromem(std::string& message);
-    static void secure_zeromem(std::vector<uint8_t>& message);
+    static void secure_zeromem(std::vector<std::uint8_t>& message);
 
     virtual std::string encrypt(const std::string& message, const MaterialPtr& material) = 0;
-    virtual size_t decrypt(const std::string& message, const MaterialPtr& material, std::string& out_buffer) = 0;
+    virtual std::size_t decrypt(const std::string& message, const MaterialPtr& material, std::string& out_buffer) = 0;
 };
 typedef std::shared_ptr<Encryptor> EncryptorPtr;
 typedef std::unique_ptr<Encryptor> EncryptorUniquePtr;

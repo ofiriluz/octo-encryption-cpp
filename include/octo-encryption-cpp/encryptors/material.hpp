@@ -15,6 +15,8 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <cstddef>
+#include <cstdint>
 
 namespace octo::encryption
 {
@@ -25,7 +27,7 @@ class Material
     virtual ~Material() = default;
 
     [[nodiscard]] virtual std::vector<std::string> generate() const = 0;
-    [[nodiscard]] virtual size_t size() const = 0;
+    [[nodiscard]] virtual std::size_t size() const = 0;
 };
 typedef std::shared_ptr<Material> MaterialPtr;
 typedef std::unique_ptr<Material> MaterialUniquePtr;

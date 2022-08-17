@@ -51,17 +51,17 @@ std::string SSLCipher::name() const
     return std::string(OBJ_nid2sn(type()));
 }
 
-size_t SSLCipher::block_size() const
+std::size_t SSLCipher::block_size() const
 {
     return EVP_CIPHER_block_size(ssl_cipher_);
 }
 
-size_t SSLCipher::key_length() const
+std::size_t SSLCipher::key_length() const
 {
     return EVP_CIPHER_key_length(ssl_cipher_);
 }
 
-size_t SSLCipher::iv_length() const
+std::size_t SSLCipher::iv_length() const
 {
     return EVP_CIPHER_iv_length(ssl_cipher_);
 }

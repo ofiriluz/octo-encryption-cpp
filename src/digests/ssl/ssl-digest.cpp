@@ -34,12 +34,12 @@ void SSLDigest::update(const std::string& plain_text)
     update(plain_text.c_str(), plain_text.size());
 }
 
-void SSLDigest::update(const std::vector<char>& plain_text, size_t size)
+void SSLDigest::update(const std::vector<char>& plain_text, std::size_t size)
 {
     update(plain_text.data(), size);
 }
 
-void SSLDigest::update(const char* plain_text, size_t size)
+void SSLDigest::update(const char* plain_text, std::size_t size)
 {
     // Reset the context if not already created, for lazy load
     if (!digest_context_)
@@ -56,7 +56,7 @@ void SSLDigest::update(const char* plain_text, size_t size)
     }
 }
 
-void SSLDigest::update(const uint8_t* plain_text, size_t size)
+void SSLDigest::update(const std::uint8_t* plain_text, std::size_t size)
 {
     // Reset the context if not already created, for lazy load
     if (!digest_context_)
@@ -112,7 +112,7 @@ std::string SSLDigest::finalize()
     // Transform the bytes string to a normal string
     std::stringstream ss;
     ss << std::hex << std::setfill('0');
-    for (size_t i = 0; i < digest_size; i++)
+    for (std::size_t i = 0; i < digest_size; i++)
     {
         ss << std::setw(2) << (int)buffer[i];
     }
@@ -120,7 +120,7 @@ std::string SSLDigest::finalize()
     return ss.str();
 }
 
-size_t SSLDigest::length()
+std::size_t SSLDigest::length()
 {
     // Reset the context if not already created, for lazy load
     if (!digest_context_)

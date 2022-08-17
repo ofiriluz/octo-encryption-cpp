@@ -24,7 +24,7 @@ SSLEncryptor::SSLEncryptor(const SSLCipherSharedPtr& cipher) : ssl_cipher_(ciphe
 {
 }
 
-std::unique_ptr<uint8_t[]> SSLEncryptor::generate_key_material(const MaterialPtr& material)
+std::unique_ptr<std::uint8_t[]> SSLEncryptor::generate_key_material(const MaterialPtr& material)
 {
     // Create the material array
     auto materials = material->generate();
@@ -37,10 +37,10 @@ std::unique_ptr<uint8_t[]> SSLEncryptor::generate_key_material(const MaterialPtr
     // We base it off SHA1 for now
     // Prepare the out buffer
     auto mask_size = ssl_cipher_->key_length();
-    auto masked = std::make_unique<uint8_t[]>(mask_size + 1);
+    auto masked = std::make_unique<std::uint8_t[]>(mask_size + 1);
 
     // Output length
-    size_t out_len = 0;
+    std::size_t out_len = 0;
 
     // Digest used
     auto digest = std::make_unique<Sha256Digest>();
@@ -54,17 +54,17 @@ std::unique_ptr<uint8_t[]> SSLEncryptor::generate_key_material(const MaterialPtr
 
     // Insert the starting key
     digest->update(imploded.str());
-    uint8_t mgf_counter[4] = {0};
+    std::uint8_t mgf_counter[4] = {0};
 
     // Roll out until size reaches mask
     for (int i = 0; out_len < mask_size; i++)
     {
-        mgf_counter[0] = (uint8_t)((i >> 24) & 255);
-        mgf_counter[1] = (uint8_t)((i >> 16) & 255);
-        mgf_counter[2] = (uint8_t)((i >> 8) & 255);
-        mgf_counter[3] = (uint8_t)(i & 255);
+        mgf_counter[0] = (std::uint8_t)((i >> 24) & 255);
+        mgf_counter[1] = (std::uint8_t)((i >> 16) & 255);
+        mgf_counter[2] = (std::uint8_t)((i >> 8) & 255);
+        mgf_counter[3] = (std::uint8_t)(i & 255);
         auto cloned = digest->clone();
-        cloned->update((uint8_t*)mgf_counter, 4);
+        cloned->update((std::uint8_t*)mgf_counter, 4);
         auto out_str = cloned->finalize();
         if (out_len + md_len <= mask_size)
         {
@@ -92,8 +92,8 @@ std::string SSLEncryptor::encrypt(const std::string& message, const MaterialPtr&
     int out_len = message.size() + ssl_cipher_->block_size();
     int temp_len = 0;
 
-    std::vector<uint8_t> out_str(out_len, 0);
-    std::vector<uint8_t> iv(ssl_cipher_->iv_length(), 0); // Temporary IV set to 0 for now
+    std::vector<std::uint8_t> out_str(out_len, 0);
+    std::vector<std::uint8_t> iv(ssl_cipher_->iv_length(), 0); // Temporary IV set to 0 for now
     std::unique_ptr<EVP_CIPHER_CTX, std::function<void(EVP_CIPHER_CTX*)>> ctx(
         EVP_CIPHER_CTX_new(), [](EVP_CIPHER_CTX* ctx) { EVP_CIPHER_CTX_free(ctx); });
     EVP_CIPHER_CTX_init(ctx.get());
@@ -104,7 +104,7 @@ std::string SSLEncryptor::encrypt(const std::string& message, const MaterialPtr&
     }
 
     if (!EVP_CipherUpdate(
-            ctx.get(), &out_str[0], &temp_len, reinterpret_cast<const uint8_t*>(&message[0]), message.size()))
+            ctx.get(), &out_str[0], &temp_len, reinterpret_cast<const std::uint8_t*>(&message[0]), message.size()))
     {
         throw std::runtime_error("Failed to cipher update");
     }
@@ -121,7 +121,7 @@ std::string SSLEncryptor::encrypt(const std::string& message, const MaterialPtr&
     return encoded;
 }
 
-size_t SSLEncryptor::decrypt(const std::string& message, const MaterialPtr& material, std::string& out_buffer)
+std::size_t SSLEncryptor::decrypt(const std::string& message, const MaterialPtr& material, std::string& out_buffer)
 {
     if (!material)
     {
@@ -131,8 +131,8 @@ size_t SSLEncryptor::decrypt(const std::string& message, const MaterialPtr& mate
     auto decoded_message = Base64::base64_decode(message);
     int out_len = decoded_message.size() + ssl_cipher_->block_size();
     int temp_len = 0;
-    std::vector<uint8_t> out_str(out_len, 0);
-    std::vector<uint8_t> iv(ssl_cipher_->iv_length(), 0); // Temporary IV set to 0 for now
+    std::vector<std::uint8_t> out_str(out_len, 0);
+    std::vector<std::uint8_t> iv(ssl_cipher_->iv_length(), 0); // Temporary IV set to 0 for now
     std::unique_ptr<EVP_CIPHER_CTX, std::function<void(EVP_CIPHER_CTX*)>> ctx(
         EVP_CIPHER_CTX_new(), [](EVP_CIPHER_CTX* ctx) { EVP_CIPHER_CTX_free(ctx); });
     EVP_CIPHER_CTX_init(ctx.get());
@@ -145,7 +145,7 @@ size_t SSLEncryptor::decrypt(const std::string& message, const MaterialPtr& mate
     if (!EVP_CipherUpdate(ctx.get(),
                           &out_str[0],
                           &temp_len,
-                          reinterpret_cast<const uint8_t*>(decoded_message.c_str()),
+                          reinterpret_cast<const std::uint8_t*>(decoded_message.c_str()),
                           decoded_message.size()))
     {
         throw std::runtime_error("Failed to cipher update");

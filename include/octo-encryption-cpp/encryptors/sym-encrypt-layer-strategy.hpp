@@ -10,6 +10,8 @@
  */
 
 #include <string>
+#include <cstddef>
+#include <cstdint>
 #include "material.hpp"
 #include "encryptor.hpp"
 
@@ -48,12 +50,12 @@ class SymEncryptLayerStrategy
      * @param material
      * @param encryptor
      * @param plain_string
-     * @return size_t
+     * @return std::size_t
      */
-    virtual size_t decrypt(const std::string& ciphered_string,
-                           const MaterialPtr& material,
-                           const EncryptorPtr& encryptor,
-                           std::string& plain_string) const = 0;
+    virtual std::size_t decrypt(const std::string& ciphered_string,
+                                const MaterialPtr& material,
+                                const EncryptorPtr& encryptor,
+                                std::string& plain_string) const = 0;
 };
 
 /**
@@ -86,12 +88,12 @@ class SymEncryptZeroLayerStrategy : public SymEncryptLayerStrategy
      * @param material
      * @param encryptor
      * @param plain_string
-     * @return size_t
+     * @return std::size_t
      */
-    size_t decrypt(const std::string& ciphered_string,
-                   const MaterialPtr& material,
-                   const EncryptorPtr& encryptor,
-                   std::string& plain_string) const override;
+    std::size_t decrypt(const std::string& ciphered_string,
+                        const MaterialPtr& material,
+                        const EncryptorPtr& encryptor,
+                        std::string& plain_string) const override;
 };
 /**
  * @brief Defines a simple 1 layer encryption strategy
@@ -123,12 +125,12 @@ class SymEncryptOneLayerStrategy : public SymEncryptLayerStrategy
      * @param material
      * @param encryptor
      * @param plain_string
-     * @return size_t
+     * @return std::size_t
      */
-    size_t decrypt(const std::string& ciphered_string,
-                   const MaterialPtr& material,
-                   const EncryptorPtr& encryptor,
-                   std::string& plain_string) const override;
+    std::size_t decrypt(const std::string& ciphered_string,
+                        const MaterialPtr& material,
+                        const EncryptorPtr& encryptor,
+                        std::string& plain_string) const override;
 };
 } // namespace octo::encryption
 

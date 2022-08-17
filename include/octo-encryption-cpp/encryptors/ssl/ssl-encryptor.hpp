@@ -24,14 +24,14 @@ class SSLEncryptor : public Encryptor
     SSLCipherSharedPtr ssl_cipher_;
 
   private:
-    std::unique_ptr<uint8_t[]> generate_key_material(const MaterialPtr& material);
+    std::unique_ptr<std::uint8_t[]> generate_key_material(const MaterialPtr& material);
 
   public:
     SSLEncryptor(const SSLCipherSharedPtr& cipher);
     ~SSLEncryptor() override = default;
 
     std::string encrypt(const std::string& message, const MaterialPtr& material) override;
-    size_t decrypt(const std::string& message, const MaterialPtr& material, std::string& out_buffer) override;
+    std::size_t decrypt(const std::string& message, const MaterialPtr& material, std::string& out_buffer) override;
 };
 } // namespace octo::encryption::ssl
 
